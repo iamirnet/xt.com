@@ -1,0 +1,26 @@
+{
+    "name": "iamirnet/xtcom",
+    "description": "PHP SDK for xt.com",
+    "keywords": ["xt.com","phpxt", "apixt", "sdkxt"],
+    "homepage": "https://php.iamir.net/packages/xtcom",
+    "type": "php package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name" : "iamirnet",
+            "email" : "me@iamir.net",
+            "homepage": "https://iamir.net",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src"
+        ],
+        "psr-4": {
+            "iAmirNet\\XT\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
