@@ -1294,8 +1294,8 @@ $api->useServerTime();
 #### Installing on Windows
 Download and install composer:
 1. https://getcomposer.org/download/
-2. Create a folder on your drive like C:\Binance
-3. Run command prompt and type `cd C:\Binance`
+2. Create a folder on your drive like C:\iAmirNet\XT
+3. Run command prompt and type `cd C:\iAmirNet\XT`
 4. ```composer require iamirnet/xtcom```
 5. Once complete copy the vendor folder into your project.
 
