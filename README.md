@@ -1,6 +1,6 @@
 [![Latest Version](https://img.shields.io/github/release/iamirnet/xt.com.svg?style=flat-square)](https://github.com/iamirnet/xt.com/releases)
 [![GitHub last commit](https://img.shields.io/github/last-commit/iamirnet/xt.com.svg?style=flat-square)](#)
-[![Packagist Downloads](https://img.shields.io/packagist/dt/iamirnet/xtcom.svg?style=flat-square)](https://packagist.org/packages/iamirnet/xt.com)
+[![Packagist Downloads](https://img.shields.io/packagist/dt/iamirnet/xtcom.svg?style=flat-square)](https://packagist.org/packages/iamirnet/xtcom)
 
 # PHP XT API
 This project is designed to help you make your own projects that interact with the [XT API](https://doc.xt.com/). You can stream candlestick chart data, market depth, or use other advanced features such as setting stop losses and iceberg orders. This project seeks to have complete API coverage including WebSockets.
