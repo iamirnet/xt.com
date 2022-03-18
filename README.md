@@ -7,7 +7,7 @@ This project is designed to help you make your own projects that interact with t
 
 #### Installation
 ```
-composer require "iamirnet/xt.com @dev"
+composer require "iamirnet/xtcom @dev"
 ```
 <details>
  <summary>Click for help with installation</summary>
@@ -22,7 +22,7 @@ php composer.phar install
 ```
 Composer not found? Use this command instead:
 ```
-php composer.phar require "iamirnet/xt.com @dev"
+php composer.phar require "iamirnet/xtcom @dev"
 ```
 
 #### Windows:
