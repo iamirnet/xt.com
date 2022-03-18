@@ -3,7 +3,7 @@
     "description": "PHP SDK for xt.com",
     "keywords": ["xt.com","phpxt", "apixt", "sdkxt"],
     "homepage": "https://php.iamir.net/packages/xtcom",
-    "license": "Apache-2.0",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name" : "iamirnet",
