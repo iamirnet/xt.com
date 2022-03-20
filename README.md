@@ -3,7 +3,7 @@
 [![Packagist Downloads](https://img.shields.io/packagist/dt/iamirnet/xtcom.svg?style=flat-square)](https://packagist.org/packages/iamirnet/xtcom)
 
 # PHP XT API
-This project is designed to help you make your own projects that interact with the [XT API](https://doc.xt.com/). You can stream candlestick chart data, market depth.
+This project is designed to help you make your own projects that interact with the [XT API](https://doc.xt.com/).
 
 #### Installation
 ```
