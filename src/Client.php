@@ -53,7 +53,7 @@ class Client
 
     public function bulkOrders($symbol, array $ids)
     {
-        return $this->signedRequest("trade/api/v1/batchOrder", ["market" => strtolower($symbol), 'data', $ids]);
+        return $this->signedRequest("trade/api/v1/batchOrder", ["market" => strtolower($symbol), 'data', $ids], "POST");
     }
 
     public function bulkOrdersInfo($symbol, array $ids)
@@ -126,27 +126,17 @@ class Client
             "market" => strtolower($symbol),
             "type" => $side == "BUY" ? 1 : 0,
             "entrustType" => $type == "MARKET" ? 1 : 0,
-            "number" => $quantity,
+            "number" => (string) $quantity,
         ];
         if ($type == "LIMIT") {
-            $opt["price"] = $price;
+            $opt["price"] = "$price";
         }
         return $this->signedRequest("trade/api/v1/order", $opt, "POST");
     }
 
-
     private function request($url, $params = [], $method = "GET")
     {
-        $opt = [
-            "http" => [
-                "method" => $method,
-                "header" => "User-Agent: Mozilla/4.0 (compatible; PHP XT API)\r\n"
-            ]
-        ];
-        $headers = array('User-Agent: Mozilla/4.0 (compatible; PHP XT API)',
-            'X-MBX-APIKEY: {$this->api_key}',
-            'Content-type: application/x-www-form-urlencoded');
-        $context = stream_context_create($opt);
+        $headers = array('User-Agent: Mozilla/4.0 (compatible; PHP XT API - iamir.net)', 'Content-type: application/x-www-form-urlencoded');
         $query = http_build_query($params, '', '&');
         $ret = $this->http_get($this->base . $url . '?' . $query, $headers);
         return $ret;
@@ -161,20 +151,12 @@ class Client
         if ($timestamp_t < 0) {
             $timestamp_t = number_format(microtime(true) * 1000, 0, '.', '');
         }
-        $params['nonce'] = $timestamp_t;
-        $params['accesskey'] = $this->api_key;
+        $params = array_merge(['accesskey' => $this->api_key], $params,['nonce' => $timestamp_t]);
+        ksort($params);
         $query = http_build_query($params, '', '&');
         $signature = hash_hmac('sha256', $query, $this->api_secret);
-        $headers = array("User-Agent: Mozilla/4.0 (compatible; PHP XT API)",
-            "X-MBX-APIKEY: {$this->api_key}",
+        $headers = array("User-Agent: Mozilla/4.0 (compatible; PHP XT API - iamir.net)",
             "Content-type: application/x-www-form-urlencoded");
-        $opt = [
-            "http" => [
-                "method" => $method,
-                "ignore_errors" => true,
-                "header" => "User-Agent: Mozilla/4.0 (compatible; PHP XT API)\r\nX-MBX-APIKEY: {$this->api_key}\r\nContent-type: application/x-www-form-urlencoded\r\n"
-            ]
-        ];
         if ($method == 'GET') {
             // parameters encoded as query string in URL
             $endpoint = "{$this->base}{$url}?{$query}&signature={$signature}";
@@ -182,7 +164,7 @@ class Client
         } else if ($method == 'POST') {
             $endpoint = "{$this->base}{$url}";
             $params['signature'] = $signature;
-            $ret = $this->http_post($endpoint, $params, $headers);
+            $ret = $this->http_post($endpoint, $params, []);
         } else {
             $endpoint = "{$this->base}{$url}?{$query}&signature={$signature}";
             $ret = $this->http_other($method, $endpoint, $headers);
@@ -201,7 +183,7 @@ class Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $output = curl_exec($curl);
         curl_close($curl);
-        return $this->output($output);
+        return $this->output($output, $url);
     }
 
     private function http_get($url, $headers = [], $data = [])
@@ -212,7 +194,7 @@ class Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $output = curl_exec($curl);
         curl_close($curl);
-        return $this->output($output);
+        return $this->output($output, $url);
     }
 
     private function http_other($method, $url, $headers = [])
@@ -224,17 +206,19 @@ class Client
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         $output = curl_exec($curl);
         curl_close($curl);
-        return $this->output($output);
+        return $this->output($output, $url);
     }
 
-    private function output($output)
+    private function output($output, $url)
     {
         $output = json_decode($output, true);
         if (!isset($output['code'])) return (object)['status' => true, 'code' => 200, 'data' => $output];
         if ($output['code'] == 200) {
             return (object)['status' => true, 'code' => $output['code'], 'data' => $output['data']];
-        } else
-            return (object)['status' => false, 'code' => $output['code'], 'message' => $output['info']];
+        } else {
+            $code = isset($output['code']) ? $output['code'] : "nOK";
+            return (object)['status' => false, 'code' => $code, 'message' => (isset($output['msg']) ? $output['msg'] : (isset($output['info']) ? $output['info'] : "Error Code: $code")) . " ($url)"];
+        }
     }
 
     public function getServerTime()
