@@ -3,7 +3,7 @@
 [![Packagist Downloads](https://img.shields.io/packagist/dt/iamirnet/xtcom.svg?style=flat-square)](https://packagist.org/packages/iamirnet/xtcom)
 
 # PHP XT API
-This project is designed to help you make your own projects that interact with the [XT API](https://doc.xt.com/). You can stream candlestick chart data, market depth, or use other advanced features such as setting stop losses and iceberg orders. This project seeks to have complete API coverage including WebSockets.
+This project is designed to help you make your own projects that interact with the [XT API](https://doc.xt.com/). You can stream candlestick chart data, market depth, or use other advanced features such as setting stop losses and iceberg orders.
 
 #### Installation
 ```
@@ -39,9 +39,7 @@ Download and install composer:
 `composer require iamirnet/xtcom`
 ```php
 require 'vendor/autoload.php';
-// 1. config in home directory
-$api = new \iAmirNet\XT\Client();
-// 3. config by specifying api key and secret
+// config by specifying api key and secret
 $api = new \iAmirNet\XT\Client("<api key>","<secret>");
 ```
 
