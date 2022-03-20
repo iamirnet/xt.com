@@ -51,9 +51,9 @@ class Client
         return $this->signedRequest("trade/api/v1/getOpenOrders", $params);
     }
 
-    public function bulkOrders($symbol, array $ids)
+    public function bulkOrders($symbol, array $data)
     {
-        return $this->signedRequest("trade/api/v1/batchOrder", ["market" => strtolower($symbol), 'data', $ids], "POST");
+        return $this->signedRequest("trade/api/v1/batchOrder", ["market" => strtolower($symbol), 'data', $data], "POST");
     }
 
     public function bulkOrdersInfo($symbol, array $ids)
@@ -66,7 +66,7 @@ class Client
         return $this->signedRequest("trade/api/v1/batchCancel", ["market" => strtolower($symbol), 'data', $ids], "POST");
     }
 
-    public function trades($symbol, $limit = 500)
+    public function trades($symbol)
     {
         return $this->request("data/api/v1/getTrades", ["market" => strtolower($symbol)]);
     }
@@ -118,6 +118,12 @@ class Client
 
     public function order($side, $symbol, $quantity, $price, $type = "LIMIT", $flags = [])
     {
+        $opt = $this->orderData($side, $symbol, $quantity, $price, $type, $flags);
+        return $this->signedRequest("trade/api/v1/order", $opt, "POST");
+    }
+
+    public function orderData($side, $symbol, $quantity, $price, $type = "LIMIT", $flags = [])
+    {
         $side = strtoupper($side);
         $type = strtoupper($type);
         if (!in_array($side, ['BUY', 'SELL'])) die("Unsupport side parameters, please check!");
@@ -131,7 +137,7 @@ class Client
         if ($type == "LIMIT") {
             $opt["price"] = "$price";
         }
-        return $this->signedRequest("trade/api/v1/order", $opt, "POST");
+        return $opt;
     }
 
     private function request($url, $params = [], $method = "GET")
