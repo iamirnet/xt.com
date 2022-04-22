@@ -10,7 +10,6 @@ class Client
     {
         if ($key) $this->api_key = $key;
         if ($secret) $this->api_secret = $secret;
-        $this->header = '';
     }
 
     public function time()
@@ -18,9 +17,14 @@ class Client
         return $this->request("trade/api/v1/getServerTime");
     }
 
-    public function marketConfig()
+    public function marketConfig($symbol = null)
     {
-        return $this->request("data/api/v1/getMarketConfig");
+        $symbols = $this->request("data/api/v1/getMarketConfig");
+        if (!$symbol) return $symbols;
+        if ($symbols->status && isset($symbols->data[strtolower($symbol)]) && $symbols->data[strtolower($symbol)]) {
+            return (object) ['status' => true, 'data' => (object) $symbols->data[strtolower($symbol)]];
+        }
+        return (object)['status' => false, "message" => "Not found."];
     }
 
     public function buy($symbol, $quantity, $price, $type = "LIMIT", $flags = [])
