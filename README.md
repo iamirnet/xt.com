@@ -48,7 +48,7 @@ $api = new \iAmirNet\XT\Client("<api key>","<secret>");
 #### Trading Market Configuration [more...](https://doc.xt.com/#quotesgetMarketConfig)
 ```php
 //Call this before running any functions
-print_r($api->marketConfig());
+print_r($api->marketConfig(/* optional */"btc_usdt"));
 ```
 
 #### Kline/Candlestick Data [more...](https://doc.xt.com/#quotesgetKLine)
@@ -199,3 +199,6 @@ print_r($mytrades);
 - Give us a star :star:
 - Fork and Clone! Awesome
 - Select existing [issues](https://github.com/iamirnet/xt.com/issues) or create a [new issue](https://github.com/iamirnet/xt.com/issues/new) and give us a PR with your bugfix or improvement after. We love it ❤️
+
+## Donate
+- USDT Or TRX: TUE8GiY4vmz831N65McwzZVbA9XEDaLinn
