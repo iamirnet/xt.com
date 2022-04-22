@@ -201,4 +201,4 @@ print_r($mytrades);
 - Select existing [issues](https://github.com/iamirnet/xt.com/issues) or create a [new issue](https://github.com/iamirnet/xt.com/issues/new) and give us a PR with your bugfix or improvement after. We love it ❤️
 
 ## Donate
-- USDT Or TRX: TUE8GiY4vmz831N65McwzZVbA9XEDaLinn
+- USDT Or TRX: TUE8GiY4vmz831N65McwzZVbA9XEDaLinn 😘❤
